@@ -47,8 +47,7 @@
             width: 600px; 
             height: 420px;
             margin-bottom: 0;
-            transform-origin: top center; 
-            /* 修改：強制置中，解決畫面歪斜問題 */
+            /* 修改：這裡保留 margin auto 負責將 wrapper 本身置中 */
             margin-left: auto;
             margin-right: auto;
         }
@@ -62,6 +61,10 @@
             overflow: hidden; 
             display: flex; justify-content: center; align-items: flex-end;
             z-index: 1;
+            
+            /* ★★★ 修復關鍵：設定縮放基準點為左上角 ★★★ */
+            /* 這樣縮放後的內容會緊貼 wrapper 的左上角，配合 wrapper 的 margin:auto 實現完美置中 */
+            transform-origin: top left;
         }
 
         /* --- 右上角公轉軌跡圖 --- */
@@ -689,9 +692,9 @@
             if (absDiff < 0.1) {
                 zenithText = "直射 (天頂)";
             } else if (diff > 0) {
-                zenithText = `天頂偏南`;
+                zenithText = `天頂偏南 ${absDiff.toFixed(1)}°`; // ★修復：加回度數
             } else {
-                zenithText = `天頂偏北`;
+                zenithText = `天頂偏北 ${absDiff.toFixed(1)}°`; // ★修復：加回度數
             }
             document.getElementById('zenithPosText').innerText = zenithText;
 
