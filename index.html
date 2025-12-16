@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>晟自然地科實驗室：太陽與四季</title>
+    <title>晟自然地科實驗室：天球與四季 (會考版)</title>
     <style>
         :root {
             --sky-gradient: linear-gradient(to bottom, #2980b9 0%, #6dd5fa 100%);
@@ -22,6 +22,7 @@
             display: flex; flex-direction: column; align-items: center;
             margin: 0; padding: 20px; color: #333;
             min-height: 100vh;
+            overflow-x: hidden; /* 防止手機橫向滾動 */
         }
 
         /* --- 標題區 --- */
@@ -31,6 +32,10 @@
             background-color: rgba(255, 255, 255, 0.95);
             padding: 10px 30px; border-radius: 50px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            
+            /* RWD 設定 */
+            max-width: 600px; width: 90%; 
+            box-sizing: border-box;
         }
         .title-logo { height: 50px; width: auto; }
         h1 { margin: 0; color: #2c3e50; font-size: 1.6rem; text-align: center; }
@@ -45,6 +50,8 @@
             overflow: hidden; 
             display: flex; justify-content: center; align-items: flex-end;
             z-index: 1;
+            /* 保持內部像素座標正確，透過 transform 進行縮放 */
+            transform-origin: top center;
         }
 
         /* --- 右上角公轉軌跡圖 --- */
@@ -251,6 +258,9 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             border-left: 8px solid #f39c12;
             display: flex; flex-direction: column; gap: 5px; 
+            
+            /* RWD */
+            max-width: 600px;
         }
         .info-header {
             display: flex; justify-content: space-between; align-items: baseline;
@@ -269,6 +279,7 @@
             display: flex; align-items: center; 
             height: 32px; 
             overflow: visible;
+            white-space: nowrap; /* 手機上避免換行 */
         }
         
         .highlight { color: #c0392b; font-weight: bold; }
@@ -300,6 +311,9 @@
             background: #f9f9f9; padding: 20px; border-radius: 0 0 20px 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             box-sizing: border-box; border-top: 1px solid #ddd;
+            
+            /* RWD */
+            max-width: 600px;
         }
         .control-row {
             display: flex; align-items: center; gap: 15px; margin-bottom: 15px;
@@ -314,6 +328,7 @@
             font-size: 1.2rem; cursor: pointer; display: flex;
             align-items: center; justify-content: center;
             margin-left: 10px; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            flex-shrink: 0; /* 防止按鈕被壓縮 */
         }
         .play-btn:hover { background: #2ecc71; transform: scale(1.05); }
         .play-btn.playing { background: #e74c3c; animation: pulse 1.5s infinite;}
@@ -325,13 +340,14 @@
             100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
         }
         
-        .btn-group { display: flex; gap: 10px; width: 100%; }
+        .btn-group { display: flex; gap: 10px; width: 100%; flex-wrap: wrap; /* 手機換行 */ }
         .btn {
             flex: 1; padding: 12px; border: none; border-radius: 8px;
             background: #fff; border: 2px solid #ddd;
             color: #555; font-weight: bold; cursor: pointer; font-size: 1rem;
             transition: 0.2s;
             text-align: center;
+            min-width: 60px; /* 手機最小寬度 */
         }
         .btn:hover { background: #eee; border-color: #bbb; }
         .btn.active { background: #3498db; color: white; border-color: #2980b9; }
@@ -339,8 +355,33 @@
         select { padding: 10px; border-radius: 6px; border: 1px solid #ccc; flex-grow: 1; font-size: 1rem; cursor: pointer;}
         select.btn-style {
             background-color: #fff; color: #555; font-weight: bold; border: 2px solid #ddd;
+            min-width: 140px; /* 假日選單最小寬度 */
         }
         select.btn-style:hover { background-color: #eee; border-color: #bbb;}
+
+        /* ★★★ 手機版響應式調整 (自動縮放) ★★★ */
+        @media (max-width: 620px) {
+            body { padding: 10px; }
+            h1 { font-size: 1.2rem; }
+            .header-container { padding: 8px 15px; }
+            .title-logo { height: 35px; }
+            
+            /* 將模擬器、資訊卡、控制區等比例縮放以適應螢幕 */
+            .simulation-container, .info-card, .controls {
+                width: 100% !important;
+            }
+            
+            /* 模擬器內部是 600px 絕對定位，必須用 scale 縮小 */
+            .simulation-container {
+                /* 計算縮放比例: 螢幕寬度 / 600 */
+                height: 0; 
+                padding-bottom: 70%; /* 420/600 = 0.7 */
+                overflow: visible; /* 允許 transform 顯示 */
+            }
+            
+            /* 建立一個內部 wrapper 來執行縮放，這裡直接用 script 動態設定 scale 可能更穩，
+               或者簡單用 zoom (非標準但手機支援度高) */
+        }
 
     </style>
 </head>
@@ -348,121 +389,117 @@
 
     <div class="header-container">
 	    <img src="logo.jpg" alt="Logo" class="title-logo" onerror="this.style.display='none'">
-        <h1>晟自然地科實驗室　太陽與四季</h1>
+        <h1>晟自然地科實驗室：天球與四季</h1>
     </div>
 
-    <div class="simulation-container">
+    <div id="simWrapper" style="width: 100%; max-width: 600px; display: flex; flex-direction: column; align-items: center;">
         
-        <div class="orbit-visual">
-            <div class="orbit-path"></div>
-            <div class="mini-sun" style="left: 55%;"></div> 
+        <div class="simulation-container" id="simContainer">
             
-            <div class="mini-earth-container" id="miniEarth">
-                <div class="earth-axis"></div>
-                <div class="earth-body" id="earthBody"></div>
+            <div class="orbit-visual">
+                <div class="orbit-path"></div>
+                <div class="mini-sun" style="left: 55%;"></div> 
+                <div class="mini-earth-container" id="miniEarth">
+                    <div class="earth-axis"></div>
+                    <div class="earth-body" id="earthBody"></div>
+                </div>
+                <div class="orbit-label" style="top: 38px; left: 0px;">夏至</div>
+                <div class="orbit-label" style="top: 38px; right: 0px; text-align:right;">冬至</div>
+                <div class="orbit-label" style="bottom: 0px; left: 50%; transform:translateX(-50%);">秋分</div>
+                <div class="orbit-label" style="top: 0px; left: 50%; transform:translateX(-50%);">春分</div>
+            </div>
+
+            <div class="celestial-dome">
+                <div class="zenith-point"></div>
+                <div class="zenith-label">天頂</div>
+                <div class="polaris" id="polaris">★<div class="polaris-label">北極星</div></div>
+                <div class="ref-point" id="refSummer"><div class="ref-label">夏至</div></div>
+                <div class="ref-point" id="refEquinox"><div class="ref-label">春秋分</div></div>
+                <div class="ref-point" id="refWinter"><div class="ref-label">冬至</div></div>
+            </div>
+
+            <div class="sun" id="sun"></div>
+            <div class="pole-visual"></div>
+            <div class="shadow" id="shadow"></div>
+
+            <div class="ground">
+                <span class="dir-label">S</span>
+                <div class="horizon-sun" id="horizonSun"><div class="horizon-sun-label">日出日沒</div></div>
+                <span class="dir-label">N</span>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="info-header">
+                <span class="season-tag" id="seasonText">春分</span>
+                <span class="date-tag" id="dateText">3/21</span>
             </div>
             
-            <div class="orbit-label" style="top: 38px; left: 0px;">夏至</div>
-            <div class="orbit-label" style="top: 38px; right: 0px; text-align:right;">冬至</div>
-            <div class="orbit-label" style="bottom: 0px; left: 50%; transform:translateX(-50%);">秋分</div>
-            <div class="orbit-label" style="top: 0px; left: 50%; transform:translateX(-50%);">春分</div>
-        </div>
-
-        <div class="celestial-dome">
-            <div class="zenith-point"></div>
-            <div class="zenith-label">天頂</div>
-
-            <div class="polaris" id="polaris">★<div class="polaris-label">北極星</div></div>
+            <div class="info-row">
+                📍 日出方位：<span class="blue-highlight" id="sunriseDir">正東方</span> ／ 日落：<span class="blue-highlight" id="sunsetDir">正西方</span>
+            </div>
             
-            <div class="ref-point" id="refSummer"><div class="ref-label">夏至</div></div>
-            <div class="ref-point" id="refEquinox"><div class="ref-label">春秋分</div></div>
-            <div class="ref-point" id="refWinter"><div class="ref-label">冬至</div></div>
-        </div>
+            <div class="info-row">
+                📐 太陽仰角：<span class="highlight" id="sunAltitude">00.0°</span>
+                <span style="margin-left: 20px;">
+                    ☀️ 正午太陽位置：<span class="highlight" id="zenithPosText">天頂</span>
+                </span>
+            </div>
 
-        <div class="sun" id="sun"></div>
-
-        <div class="pole-visual"></div>
-        <div class="shadow" id="shadow"></div>
-
-        <div class="ground">
-            <span class="dir-label">S</span>
+            <div class="info-row">
+                🌗 晝夜長短：<span class="highlight" id="dayNightText">晝夜等長</span>
+            </div>
             
-            <div class="horizon-sun" id="horizonSun"><div class="horizon-sun-label">日出日沒</div></div>
+            <div class="info-row" id="shadowInfo">
+                📏 正午竿影：朝北
+            </div>
             
-            <span class="dir-label">N</span>
-        </div>
-    </div>
+            <div class="info-row" id="directHitInfo">
+                🔥 太陽直射累積：<span class="highlight" id="hitCount">0</span> 次&nbsp;<span id="hitTotal">(本地一年總計 0 次)</span>
+            </div>
 
-    <div class="info-card">
-        <div class="info-header">
-            <span class="season-tag" id="seasonText">春分</span>
-            <span class="date-tag" id="dateText">3/21</span>
-        </div>
-        
-        <div class="info-row">
-            📍 日出方位：<span class="blue-highlight" id="sunriseDir">正東方</span> ／ 日落：<span class="blue-highlight" id="sunsetDir">正西方</span>
-        </div>
-        
-        <div class="info-row">
-            📐 太陽仰角：<span class="highlight" id="sunAltitude">00.0°</span>
-            <span style="margin-left: 20px;">
-                ☀️ 正午太陽位置：<span class="highlight" id="zenithPosText">天頂</span>
-            </span>
+            <div class="info-row" id="polarInfo">
+                🌍 極圈狀況：
+            </div>
         </div>
 
-        <div class="info-row">
-            🌗 晝夜長短：<span class="highlight" id="dayNightText">晝夜等長</span>
-        </div>
-        
-        <div class="info-row" id="shadowInfo">
-            📏 正午竿影：朝北
-        </div>
-        
-        <div class="info-row" id="directHitInfo">
-            🔥 太陽直射累積：<span class="highlight" id="hitCount">0</span> 次&nbsp;<span id="hitTotal">(本地一年總計 0 次)</span>
-        </div>
+        <div class="controls">
+            <div class="control-row">
+                <label>地點</label>
+                <select id="locationSelect" onchange="updateSim()">
+                    <option value="23.48" selected>嘉義 (23.5°N - 北回歸線)</option>
+                    <option value="25.03">台北 (25.0°N)</option>
+                    <option value="22.62">高雄 (22.6°N)</option>
+                </select>
+            </div>
 
-        <div class="info-row" id="polarInfo">
-            🌍 極圈狀況：
-        </div>
-    </div>
+            <div class="control-row">
+                <label>日期</label>
+                <input type="range" id="dateSlider" min="0" max="364" value="80" oninput="updateSim()">
+                <button id="playBtn" class="play-btn" onclick="togglePlay()" title="自動播放一年">▶</button>
+            </div>
 
-    <div class="controls">
-        <div class="control-row">
-            <label>地點</label>
-            <select id="locationSelect" onchange="updateSim()">
-                <option value="23.48" selected>嘉義 (23.5°N - 北回歸線)</option>
-                <option value="25.03">台北 (25.0°N)</option>
-                <option value="22.62">高雄 (22.6°N)</option>
-            </select>
-        </div>
-
-        <div class="control-row">
-            <label>日期</label>
-            <input type="range" id="dateSlider" min="0" max="364" value="80" oninput="updateSim()">
-            <button id="playBtn" class="play-btn" onclick="togglePlay()" title="自動播放一年">▶</button>
-        </div>
-
-        <div class="btn-group">
-            <button class="btn" id="btnSpring" onclick="setDay(80)">春分</button>
-            <button class="btn" id="btnSummer" onclick="setDay(172)">夏至</button>
-            <button class="btn" id="btnAutumn" onclick="setDay(264)">秋分</button>
-            <button class="btn" id="btnWinter" onclick="setDay(355)">冬至</button>
-            
-            <select id="holidaySelect" class="btn btn-style" onchange="applyHoliday()" style="text-align: center; text-align-last:center;">
-                <option value="" disabled selected>📅 節日</option>
-                <option value="0">1/1 元旦</option>
-                <option value="58">2/28 和平紀念日</option>
-                <option value="93">4/4 兒童節</option>
-                <option value="94">4/5 清明節</option>
-                <option value="120">5/1 勞動節</option>
-                <option value="130">5月第2週 母親節</option>
-                <option value="219">8/8 父親節</option>
-                <option value="270">9/28 教師節</option>
-                <option value="282">10/10 國慶日</option>
-                <option value="297">10/25 光復節</option>
-                <option value="358">12/25 行憲紀念日</option>
-            </select>
+            <div class="btn-group">
+                <button class="btn" id="btnSpring" onclick="setDay(80)">春分</button>
+                <button class="btn" id="btnSummer" onclick="setDay(172)">夏至</button>
+                <button class="btn" id="btnAutumn" onclick="setDay(264)">秋分</button>
+                <button class="btn" id="btnWinter" onclick="setDay(355)">冬至</button>
+                
+                <select id="holidaySelect" class="btn btn-style" onchange="applyHoliday()" style="text-align: center; text-align-last:center;">
+                    <option value="" disabled selected>📅 國定假日/節日</option>
+                    <option value="0">1/1 元旦</option>
+                    <option value="58">2/28 和平紀念日</option>
+                    <option value="93">4/4 兒童節</option>
+                    <option value="94">4/5 清明節</option>
+                    <option value="120">5/1 勞動節</option>
+                    <option value="130">5月第2週 母親節</option>
+                    <option value="219">8/8 父親節</option>
+                    <option value="270">9/28 教師節</option>
+                    <option value="282">10/10 國慶日</option>
+                    <option value="297">10/25 光復節</option>
+                    <option value="358">12/25 行憲紀念日</option>
+                </select>
+            </div>
         </div>
     </div>
 
@@ -470,11 +507,36 @@
         const R = 250; 
         const GROUND_Y = 35;
         const POLE_HEIGHT = 90; 
-        
         const ORBIT_W = 80; 
         const ORBIT_H = 25; 
         
         let playInterval = null;
+        
+        // ★★★ RWD 縮放邏輯 ★★★
+        function resizeSimulation() {
+            const wrapper = document.getElementById('simWrapper');
+            const simContainer = document.getElementById('simContainer');
+            // 取得 wrapper 目前的寬度 (會隨螢幕變小)
+            const width = wrapper.clientWidth;
+            
+            // 只有當寬度小於 600 時才縮放
+            if (width < 600) {
+                const scale = width / 600;
+                // 設定 transform 縮放
+                simContainer.style.transform = `scale(${scale})`;
+                // 修正高度，因為 scale 後佔用空間變小，下方會留白，需手動調整 wrapper 或 margin
+                simContainer.style.marginBottom = `-${420 * (1 - scale)}px`; 
+                // 讓 simContainer 的寬度也 visually 縮小
+                simContainer.style.width = '600px'; // 保持原始像素計算基礎
+            } else {
+                simContainer.style.transform = 'none';
+                simContainer.style.marginBottom = '0';
+                simContainer.style.width = '600px';
+            }
+        }
+        // 監聽視窗大小改變
+        window.addEventListener('resize', resizeSimulation);
+        // 初始化呼叫一次
         
         function setDay(val) {
             document.getElementById('dateSlider').value = val;
@@ -604,7 +666,6 @@
             miniEarth.style.left = `calc(50% + ${earthX}px)`;
             miniEarth.style.top = `calc(50% + ${earthY}px)`;
             
-            // 只旋轉本體(亮暗面)，軸心不動(CSS fixed)
             earthBody.style.transform = `rotate(${-orbitAngle}rad)`;
 
             // 7. 文字更新
@@ -683,21 +744,19 @@
 
             // 正午太陽位置描述
             let zenithText = "";
-            let diff = lat - dec; // 用來判斷南北: lat > dec (偏南), lat < dec (偏北)
+            let diff = lat - dec; 
             let absDiff = Math.abs(diff);
 
             if (isSpring || isAutumn) {
-                diff = lat; // 赤緯強制為0
+                diff = lat; 
                 absDiff = lat;
             }
             
             if (absDiff < 0.1) {
                 zenithText = "直射 (天頂)";
             } else if (diff > 0) {
-                // 太陽在南方
                 zenithText = `天頂偏南 ${absDiff.toFixed(1)}°`;
             } else {
-                // 太陽在北方
                 zenithText = `天頂偏北 ${absDiff.toFixed(1)}°`;
             }
             document.getElementById('zenithPosText').innerText = zenithText;
@@ -715,7 +774,7 @@
             else dayNight = "晝短夜長 " + trend;
             document.getElementById('dayNightText').innerText = dayNight;
 
-            // 竿影
+            // ★★★ 竿影描述優化 (考試重點) ★★★
             let shadowDir = isSunNorth ? "朝南" : "朝北";
             let shadowDesc = "";
             let rad = displayAlt * (Math.PI / 180);
@@ -727,11 +786,15 @@
                 shadowDir = "消失"; 
                 shadowDesc = "直射"; 
                 isDirect = true;
-            } else if (ratio < 0.1) shadowDesc = "極短";
-            else if (ratio < 0.6) shadowDesc = "約竿長的一半"; 
-            else if (ratio >= 0.9 && ratio <= 1.1) shadowDesc = "約與竿長相等"; 
-            else if (ratio > 1.1) shadowDesc = "大於竿長";
-            else shadowDesc = "長度適中";
+            } 
+            // 考試常考：小於、等於、大於
+            else if (ratio < 0.9) {
+                shadowDesc = "小於竿長";
+            } else if (ratio >= 0.9 && ratio <= 1.1) {
+                shadowDesc = "約等於竿長";
+            } else {
+                shadowDesc = "大於竿長";
+            }
             
             let shadowHtml = "";
             if (isDirect) {
@@ -748,13 +811,13 @@
             let totalHits = 0;
             let currentHits = 0;
             
-            if (lat > 24) { // 台北
+            if (lat > 24) { 
                 totalHits = 0;
                 currentHits = 0;
-            } else if (lat > 23) { // 嘉義
+            } else if (lat > 23) { 
                 totalHits = 1;
                 if (day >= 172) currentHits = 1; 
-            } else { // 高雄
+            } else { 
                 totalHits = 2;
                 if (day >= 156) currentHits++;
                 if (day >= 188) currentHits++;
@@ -776,7 +839,10 @@
             }
         }
 
-        window.onload = updateSim;
+        window.onload = function() {
+            updateSim();
+            resizeSimulation(); // 確保初始載入時也正確縮放
+        };
     </script>
 </body>
 </html>
