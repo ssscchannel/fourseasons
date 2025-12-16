@@ -20,35 +20,37 @@
             background-color: #f0f2f5;
             
             display: flex; flex-direction: column; align-items: center;
-            margin: 0; padding: 10px; /* 手機版減少外邊距 */
+            /* 修改：減少上下邊距，盡量讓內容塞進一頁 */
+            margin: 0; padding: 5px; 
             min-height: 100vh;
-            overflow-x: hidden; /* 防止水平滾動 */
-            touch-action: manipulation; /* 優化觸控 */
+            overflow-x: hidden; 
+            touch-action: manipulation;
         }
 
         /* --- 標題區 (手機版緊湊化) --- */
         .header-container { 
             display: flex; align-items: center; justify-content: center;   
-            gap: 10px; margin-top: 5px; margin-bottom: 10px;
+            gap: 10px; margin-top: 2px; margin-bottom: 5px; /* 修改：減少間距 */
             background-color: rgba(255, 255, 255, 0.95);
-            padding: 8px 20px; border-radius: 50px;
+            padding: 6px 15px; border-radius: 50px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             
             max-width: 600px; width: 100%; 
             box-sizing: border-box;
         }
-        .title-logo { height: 40px; width: auto; }
-        h1 { margin: 0; color: #2c3e50; font-size: 1.4rem; text-align: center; white-space: nowrap; }
+        .title-logo { height: 36px; width: auto; }
+        h1 { margin: 0; color: #2c3e50; font-size: 1.2rem; text-align: center; white-space: nowrap; }
 
         /* --- 主模擬視窗 --- */
-        /* 增加一個 Wrapper 來控制縮放後的佔位空間 */
         #simWrapper {
             position: relative;
             width: 600px; 
             height: 420px;
             margin-bottom: 0;
-            transform-origin: top center; /* 從上方置中縮放 */
-            /* 這裡的 width/height 會由 JS 動態修改以適應手機 */
+            transform-origin: top center; 
+            /* 修改：強制置中，解決畫面歪斜問題 */
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .simulation-container {
@@ -208,37 +210,37 @@
         /* --- 資訊面板 (手機版優化) --- */
         .info-card {
             width: 100%; max-width: 600px;
-            background: white; padding: 12px 20px; box-sizing: border-box;
+            background: white; padding: 10px 15px; /* 修改：減少內邊距 */
+            box-sizing: border-box;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             border-left: 8px solid #f39c12;
-            display: flex; flex-direction: column; gap: 4px; /* 減少間距 */
+            display: flex; flex-direction: column; gap: 2px; /* 修改：減少行距 */
         }
         .info-header {
             display: flex; justify-content: space-between; align-items: baseline;
-            border-bottom: 2px solid #eee; padding-bottom: 5px; margin-bottom: 5px;
+            border-bottom: 2px solid #eee; padding-bottom: 4px; margin-bottom: 4px;
         }
-        .season-tag { font-size: 1.4rem; font-weight: 900; color: #e67e22; }
+        .season-tag { font-size: 1.3rem; font-weight: 900; color: #e67e22; }
         .date-tag {
-            font-size: 1.1rem; font-weight: bold; color: #2c3e50;
-            background: #eee; padding: 2px 10px; border-radius: 5px;
+            font-size: 1rem; font-weight: bold; color: #2c3e50;
+            background: #eee; padding: 2px 8px; border-radius: 5px;
         }
         
         .info-row { 
-            font-size: 0.95rem; /* 手機版字體稍縮小 */
+            font-size: 0.9rem; /* 手機版字體縮小 */
             color: #444; 
             display: flex; align-items: center; 
-            min-height: 28px; /* 高度縮小 */
+            min-height: 24px; 
             overflow: visible; 
-            flex-wrap: wrap; /* 允許換行 */
+            flex-wrap: wrap; 
         }
         
         .highlight { color: #c0392b; font-weight: bold; }
         .blue-highlight { color: #2980b9; font-weight: bold; }
-        .sub-info { font-size: 0.85rem; color: #7f8c8d; margin-left: 5px; }
-
+        
         .direct-sun-highlight {
-            color: #d35400; font-weight: 900; font-size: 1.1rem;
-            background: #fadbd8; padding: 0px 6px; border-radius: 4px;
+            color: #d35400; font-weight: 900; font-size: 1.0rem;
+            background: #fadbd8; padding: 0px 4px; border-radius: 4px;
             line-height: 1.2; display: inline-block;
         }
         
@@ -246,7 +248,7 @@
         .polar-night { color: #2c3e50; font-weight: 900; }
         
         #polarInfo {
-            border-top: 1px dashed #ddd; margin-top: 5px; padding-top: 5px;
+            border-top: 1px dashed #ddd; margin-top: 4px; padding-top: 4px;
             visibility: hidden; 
         }
         #polarInfo.visible { visibility: visible; }
@@ -254,60 +256,54 @@
         /* --- 控制區 --- */
         .controls { 
             width: 100%; max-width: 600px;
-            margin-top: 0; margin-bottom: 20px;
-            background: #f9f9f9; padding: 15px; border-radius: 0 0 20px 20px;
+            margin-top: 0; margin-bottom: 10px; /* 減少底部空間 */
+            background: #f9f9f9; padding: 10px; /* 減少內距 */
+            border-radius: 0 0 20px 20px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             box-sizing: border-box; border-top: 1px solid #ddd;
         }
-        .control-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
-        label { font-weight: bold; color: #555; min-width: 50px; font-size: 0.95rem;}
+        .control-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+        label { font-weight: bold; color: #555; min-width: 40px; font-size: 0.9rem;}
         input[type=range] { flex-grow: 1; cursor: pointer; height: 25px;}
         
         .play-btn {
             background: #27ae60; color: white; border: none;
-            width: 32px; height: 32px; border-radius: 50%;
-            font-size: 1.1rem; cursor: pointer; display: flex;
+            width: 30px; height: 30px; border-radius: 50%;
+            font-size: 1rem; cursor: pointer; display: flex;
             align-items: center; justify-content: center;
-            margin-left: 8px; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            margin-left: 5px; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             flex-shrink: 0;
         }
         .play-btn:hover { background: #2ecc71; transform: scale(1.05); }
         .play-btn.playing { background: #e74c3c; animation: pulse 1.5s infinite;}
-        .play-btn.playing:hover { background: #c0392b; }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
-            70% { box-shadow: 0 0 0 6px rgba(231, 76, 60, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
-        }
         
-        .btn-group { display: flex; gap: 8px; width: 100%; flex-wrap: wrap; justify-content: space-between; }
+        .btn-group { display: flex; gap: 5px; width: 100%; flex-wrap: wrap; justify-content: space-between; }
         .btn {
-            flex: 1 1 20%; /* 按鈕彈性縮放 */
-            padding: 10px 5px; border: none; border-radius: 8px;
+            flex: 1 1 18%; 
+            padding: 8px 2px; border: none; border-radius: 6px;
             background: #fff; border: 2px solid #ddd;
-            color: #555; font-weight: bold; cursor: pointer; font-size: 0.9rem;
-            transition: 0.2s; text-align: center; min-width: 50px;
+            color: #555; font-weight: bold; cursor: pointer; font-size: 0.85rem;
+            transition: 0.2s; text-align: center; min-width: 45px;
         }
         .btn:hover { background: #eee; border-color: #bbb; }
         .btn.active { background: #3498db; color: white; border-color: #2980b9; }
 
-        select { padding: 8px; border-radius: 6px; border: 1px solid #ccc; flex-grow: 1; font-size: 0.95rem; cursor: pointer;}
+        select { padding: 6px; border-radius: 6px; border: 1px solid #ccc; flex-grow: 1; font-size: 0.9rem; cursor: pointer;}
         select.btn-style {
             background-color: #fff; color: #555; font-weight: bold; border: 2px solid #ddd;
-            min-width: 100%; /* 手機版假日選單佔滿一行 */
+            min-width: 100%; 
             flex-basis: 100%;
             margin-top: 5px;
         }
-        select.btn-style:hover { background-color: #eee; border-color: #bbb;}
 
         /* ★★★ 手機版專用優化 ★★★ */
         @media (max-width: 620px) {
-            h1 { font-size: 1.2rem; }
-            .title-logo { height: 30px; }
-            .orbit-visual { transform: scale(0.85); top: 10px; right: 5px; } /* 公轉圖縮小一點避免擋到 */
-            .info-row { font-size: 0.9rem; }
-            .btn { font-size: 0.85rem; padding: 8px 2px;}
+            h1 { font-size: 1.1rem; }
+            .title-logo { height: 28px; }
+            .orbit-visual { transform: scale(0.8); top: 10px; right: 0px; } 
+            .btn { font-size: 0.8rem; padding: 6px 0;}
+            /* 強制縮小竿子與影子以免太擁擠 */
+            .pole-visual { height: 80px; }
         }
 
     </style>
@@ -369,7 +365,7 @@
         <div class="info-row">
             📐 太陽仰角：<span class="highlight" id="sunAltitude">00.0°</span>
             <span style="margin-left: 15px;">
-                ☀️ 正午太陽位置：<span class="highlight" id="zenithPosText">天頂</span>
+                ☀️ 正午位置：<span class="highlight" id="zenithPosText">天頂</span>
             </span>
         </div>
 
@@ -432,36 +428,44 @@
     <script>
         const R = 250; 
         const GROUND_Y = 35;
-        const POLE_HEIGHT = 90; 
+        // 若螢幕小，動態調整竿子高度計算基數
+        let POLE_HEIGHT = 90; 
         const ORBIT_W = 80; 
         const ORBIT_H = 25; 
         
         let playInterval = null;
         
-        // ★★★ RWD 智慧縮放邏輯 (修正版) ★★★
+        // ★★★ RWD 智慧縮放邏輯 (修正版：解決歪斜) ★★★
         function resizeSimulation() {
             const wrapper = document.getElementById('simWrapper');
             const simContainer = document.getElementById('simContainer');
-            // 取得 body 的寬度 (扣除 padding)
-            const availableWidth = document.body.clientWidth - 20; // 20是 buffer
+            // 使用 window.innerWidth 確保獲取正確的視窗寬度，減去邊距
+            const availableWidth = Math.min(window.innerWidth, document.body.clientWidth) - 20; 
             
+            // 手機版調整竿子高度參數，避免影子過長
+            if (window.innerWidth < 620) {
+                POLE_HEIGHT = 80; // 對應 CSS 的 .pole-visual 高度
+            } else {
+                POLE_HEIGHT = 90;
+            }
+
             // 原始寬度 600
             if (availableWidth < 600) {
                 const scale = availableWidth / 600;
                 // 使用 transform 進行縮放
                 simContainer.style.transform = `scale(${scale})`;
                 
-                // ★ 關鍵：強制修改 wrapper 的高度與寬度，讓下方的內容自動補位
+                // ★ 關鍵：強制修改 wrapper 的高度與寬度，並確保置中
                 wrapper.style.width = `${600 * scale}px`;
                 wrapper.style.height = `${420 * scale}px`;
                 
-                // 寬度不足時，讓 wrapper 置中
-                wrapper.style.margin = "0 auto";
             } else {
                 simContainer.style.transform = 'none';
                 wrapper.style.width = '600px';
                 wrapper.style.height = '420px';
             }
+            // 每次縮放後重繪影子，確保比例正確
+            updateSim(true);
         }
         window.addEventListener('resize', resizeSimulation);
         
@@ -526,10 +530,16 @@
             const lat = parseFloat(document.getElementById('locationSelect').value);
             
             document.querySelectorAll('button.btn').forEach(b => b.classList.remove('active'));
-            if(Math.abs(dayOfYear - 80) < 2) document.getElementById('btnSpring').classList.add('active');
-            if(Math.abs(dayOfYear - 172) < 2) document.getElementById('btnSummer').classList.add('active');
-            if(Math.abs(dayOfYear - 264) < 2) document.getElementById('btnAutumn').classList.add('active');
-            if(Math.abs(dayOfYear - 355) < 2) document.getElementById('btnWinter').classList.add('active');
+            // 寬鬆判定節氣 (±1天)
+            const isSpring = Math.abs(dayOfYear - 80) < 2;
+            const isSummer = Math.abs(dayOfYear - 172) < 2;
+            const isAutumn = Math.abs(dayOfYear - 264) < 2;
+            const isWinter = Math.abs(dayOfYear - 355) < 2;
+
+            if(isSpring) document.getElementById('btnSpring').classList.add('active');
+            if(isSummer) document.getElementById('btnSummer').classList.add('active');
+            if(isAutumn) document.getElementById('btnAutumn').classList.add('active');
+            if(isWinter) document.getElementById('btnWinter').classList.add('active');
             
             const holidaySelect = document.getElementById('holidaySelect');
             const holidayDays = [0, 58, 93, 94, 120, 130, 219, 270, 282, 297, 358];
@@ -596,7 +606,7 @@
             earthBody.style.transform = `rotate(${-orbitAngle}rad)`;
 
             // 7. 文字更新
-            updateTextInfo(dayOfYear, declination, isSunNorth, altitude, latDiff, lat);
+            updateTextInfo(dayOfYear, declination, isSunNorth, altitude, latDiff, lat, {isSpring, isSummer, isAutumn, isWinter});
         }
 
         function updateRefPoint(id, lat, dec) {
@@ -611,11 +621,8 @@
             el.style.bottom = `${GROUND_Y + y}px`; 
         }
 
-        function updateTextInfo(day, dec, isSunNorth, alt, latDiff, lat) {
-            const isSpring = Math.abs(day - 80) < 2;
-            const isSummer = Math.abs(day - 172) < 2;
-            const isAutumn = Math.abs(day - 264) < 2;
-            const isWinter = Math.abs(day - 355) < 2;
+        function updateTextInfo(day, dec, isSunNorth, alt, latDiff, lat, seasons) {
+            const { isSpring, isSummer, isAutumn, isWinter } = seasons;
 
             // 季節
             let season = "";
@@ -682,9 +689,9 @@
             if (absDiff < 0.1) {
                 zenithText = "直射 (天頂)";
             } else if (diff > 0) {
-                zenithText = `天頂偏南 ${absDiff.toFixed(1)}°`;
+                zenithText = `天頂偏南`;
             } else {
-                zenithText = `天頂偏北 ${absDiff.toFixed(1)}°`;
+                zenithText = `天頂偏北`;
             }
             document.getElementById('zenithPosText').innerText = zenithText;
 
@@ -692,8 +699,9 @@
             // 晝夜
             let dayNight = "";
             let trend = "";
-            if (day >= 355 || day < 172) trend = "(過後晝漸長、夜漸短)";
-            else trend = "(過後晝漸短、夜漸長)";
+            if (day >= 355 || day < 172) trend = "(晝漸長)";
+            else trend = "(晝漸短)";
+            
             if (isSpring || isAutumn) dayNight = "晝夜等長 " + trend;
             else if (isSummer) dayNight = "晝最長、夜最短 " + trend;
             else if (isWinter) dayNight = "晝最短、夜最長 " + trend;
@@ -701,7 +709,7 @@
             else dayNight = "晝短夜長 " + trend;
             document.getElementById('dayNightText').innerText = dayNight;
 
-            // ★★★ 竿影描述優化 (修正：保留詳細描述，移除適中，補充空缺) ★★★
+            // ★★★ 竿影描述優化 (只在四節氣顯示括號說明) ★★★
             let shadowDir = isSunNorth ? "朝南" : "朝北";
             let shadowDesc = "";
             let rad = displayAlt * (Math.PI / 180);
@@ -713,27 +721,33 @@
                 shadowDir = "消失"; 
                 shadowDesc = "直射"; 
                 isDirect = true;
-            } else if (ratio < 0.1) {
-                shadowDesc = "極短";
-            } else if (ratio < 0.6) {
-                shadowDesc = "約竿長的一半"; 
-            } else if (ratio < 0.9) { 
-                // 將原先「長度適中」的區間，改為考試相關描述
-                shadowDesc = "小於竿長"; 
-            } else if (ratio >= 0.9 && ratio <= 1.1) {
-                shadowDesc = "約與竿長相等"; 
-            } else {
-                shadowDesc = "大於竿長";
+            } else if (isSpring || isSummer || isAutumn || isWinter) {
+                // 只有特定節氣才計算並顯示長度描述
+                if (ratio < 0.1) {
+                    shadowDesc = "極短";
+                } else if (ratio < 0.6) {
+                    shadowDesc = "約竿長的一半"; 
+                } else if (ratio < 0.9) { 
+                    shadowDesc = "小於竿長"; 
+                } else if (ratio >= 0.9 && ratio <= 1.1) {
+                    shadowDesc = "約與竿長相等"; 
+                } else {
+                    shadowDesc = "大於竿長";
+                }
             }
             
             let shadowHtml = "";
             if (isDirect) {
                 shadowHtml = `📏 正午竿影：<span class="direct-sun-highlight">直射 (無影)</span>`;
-            } else if (isSummer) {
-                shadowHtml = `📏 正午竿影：<span class="direct-sun-highlight">${shadowDir}&nbsp;<span style="font-weight:normal">(${shadowDesc})</span></span>`;
-                if (isSunNorth) shadowHtml += ` <span style='font-size:0.95rem; color:#d35400; font-weight:bold;'> (太陽偏北)</span>`;
             } else {
-                shadowHtml = `📏 正午竿影：<span class="highlight">${shadowDir}</span>&nbsp; (${shadowDesc})`;
+                // 如果有描述（即節氣當天），才顯示括號
+                let descSpan = shadowDesc ? `&nbsp; <span style="font-weight:normal">(${shadowDesc})</span>` : "";
+                
+                shadowHtml = `📏 正午竿影：<span class="highlight">${shadowDir}</span>${descSpan}`;
+                
+                if (isSummer && isSunNorth) {
+                     shadowHtml += ` <span style='font-size:0.9rem; color:#d35400;'> (太陽偏北)</span>`;
+                }
             }
             document.getElementById('shadowInfo').innerHTML = shadowHtml;
 
@@ -759,10 +773,10 @@
             // 極圈
             const polarInfo = document.getElementById('polarInfo');
             if (isSummer) {
-                polarInfo.innerHTML = `🌍 極圈狀況：北極圈 <span class="polar-day">永晝</span> ／ 南極圈 <span class="polar-night">永夜</span>`;
+                polarInfo.innerHTML = `🌍 極圈：北極圈 <span class="polar-day">永晝</span> ／ 南極圈 <span class="polar-night">永夜</span>`;
                 polarInfo.classList.add('visible');
             } else if (isWinter) {
-                polarInfo.innerHTML = `🌍 極圈狀況：北極圈 <span class="polar-night">永夜</span> ／ 南極圈 <span class="polar-day">永晝</span>`;
+                polarInfo.innerHTML = `🌍 極圈：北極圈 <span class="polar-night">永夜</span> ／ 南極圈 <span class="polar-day">永晝</span>`;
                 polarInfo.classList.add('visible');
             } else {
                 polarInfo.classList.remove('visible');
