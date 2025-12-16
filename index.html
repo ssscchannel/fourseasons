@@ -702,8 +702,8 @@
             // 晝夜
             let dayNight = "";
             let trend = "";
-            if (day >= 355 || day < 172) trend = "(晝漸長)";
-            else trend = "(晝漸短)";
+            if (day >= 355 || day < 172) trend = "(之後晝漸長,夜漸短)";
+            else trend = "(之後晝漸短,夜漸長)";
             
             if (isSpring || isAutumn) dayNight = "晝夜等長 " + trend;
             else if (isSummer) dayNight = "晝最長、夜最短 " + trend;
