@@ -512,7 +512,7 @@
                     if (val > 364) val = 0; 
                     slider.value = val;
                     updateSim(true);
-                }, 22);
+                }, 33); // ★★★ 修改：改為33ms，約等於12秒跑完一年 (33ms * 365 ≈ 12.045s) ★★★
             }
         }
 
