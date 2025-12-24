@@ -41,6 +41,38 @@
         .title-logo { height: 36px; width: auto; }
         h1 { margin: 0; color: #2c3e50; font-size: 1.2rem; text-align: center; white-space: nowrap; }
 
+        /* --- 新增：外部連結按鈕 (移植自 index.html) --- */
+        .external-link-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px; 
+            text-decoration: none;
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: #fff;
+            
+            /* 樣式保持一致 */
+            padding: 6px 18px; 
+            font-size: 0.9rem; 
+            
+            border-radius: 50px;
+            font-weight: bold;
+            /* 微調：針對此檔案較緊湊的佈局，將原 margin-bottom: 20px 微調為 10px */
+            margin-bottom: 10px;
+            box-shadow: 0 3px 8px rgba(52, 152, 219, 0.4);
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .external-link-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(52, 152, 219, 0.6);
+            background: linear-gradient(135deg, #2980b9 0%, #2c3e50 100%);
+        }
+        .external-link-btn:active {
+            transform: scale(0.98);
+        }
+
         /* --- 主模擬視窗 --- */
         #simWrapper {
             position: relative;
@@ -165,7 +197,7 @@
             background: radial-gradient(circle, #fff700 30%, #f1c40f 100%);
             border-radius: 50%; box-shadow: 0 0 25px #fff700;
             transform: translate(-50%, 50%); z-index: 30;
-            /* transition: bottom 0.2s ease, left 0.2s ease; */
+            transition: bottom 0.2s ease, left 0.2s ease;
         }
 
         .horizon-sun {
@@ -173,7 +205,7 @@
             width: 20px; height: 20px; background: #f39c12; 
             border: 2px solid #fff; border-radius: 50%;
             transform: translate(-50%, -50%); z-index: 15;
-            /* transition: left 0.3s ease; box-shadow: 0 0 5px #f39c12; */
+            transition: left 0.3s ease; box-shadow: 0 0 5px #f39c12;
         }
         .horizon-sun-label {
             position: absolute; top: 50%; left: 24px; 
@@ -196,7 +228,7 @@
         .polaris {
             position: absolute; font-size: 32px; color: #f1c40f;
             text-shadow: 0 0 10px #f39c12; z-index: 15;
-            /* transition: bottom 0.3s ease, left 0.3s ease; */
+            transition: bottom 0.3s ease, left 0.3s ease;
             transform: translate(-50%, 50%);
         }
         .polaris-label {
@@ -317,6 +349,10 @@
 	    <img src="logo.jpg" alt="Logo" class="title-logo" onerror="this.style.display='none'">
         <h1>晟自然地科實驗室　太陽與四季</h1>
     </div>
+
+    <a href="https://line.me/ti/g2/TTCqPpZP6lQqX1z_AUDPNm4977Dvylew3O7oBg?utm_source=invitation&utm_medium=link_copy&utm_campaign=default" target="_blank" class="external-link-btn">
+        <span>👉</span> 加 LINE 免費提問
+    </a>
 
     <div id="simWrapper">
         <div class="simulation-container" id="simContainer">
