@@ -31,7 +31,8 @@
         /* --- 標題區 (手機版緊湊化) --- */
         .header-container {
             flex-shrink: 0; /* 禁止被壓縮 */
-            width: 95%;     /* 稍微留邊 */
+            width: 97%;     /* 稍微留邊 */
+			box-sizing: border-box; /* 確保 padding 不會讓它變更寬 */
             max-width: 800px;
             
             /* 讓標題在左，按鈕在右 */
@@ -42,6 +43,7 @@
             /* 視覺美化 */
             padding: 8px 15px;
             margin-top: 5px;
+			margin-bottom: 8px;
             background: rgba(255, 255, 255, 0.9); /* 90% 不透明度 */
             backdrop-filter: blur(5px);
             border-radius: 12px;
@@ -50,7 +52,7 @@
         }
 		
         .title-logo {
-            height: 28px; /* 限制高度，避免撐開 */
+            height: 36px; /* 限制高度，避免撐開 */
             width: auto;
             border-radius: 4px;
         }
@@ -412,7 +414,7 @@
 
         <div class="nav-buttons">
             <a href="https://line.me/ti/g2/TTCqPpZP6lQqX1z_AUDPNm4977Dvylew3O7oBg" target="_blank" class="header-btn" title="加入官方LINE">
-                <span>👉</span>提問
+                <span>👉</span>加 LINE 提問
             </a>
             
             </div>
